@@ -1,0 +1,26 @@
+{
+  "name": "kibata",
+  "version": "1.0.0",
+  "description": "Kibata is a discord bot which we are not sure what it does , but soon we will .",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbhupen/kibata.git"
+  },
+  "author": "kibaeta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bbhupen/kibata/issues"
+  },
+  "homepage": "https://github.com/bbhupen/kibata#readme"
+}
