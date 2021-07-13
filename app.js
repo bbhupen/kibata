@@ -1,48 +1,77 @@
 require('dotenv').config()
-const Discord = require("discord.js"); // imports the discord library
-const fs = require("fs"); // imports the file io library
+const Discord = require("discord.js"); 
+const fs = require("fs"); 
 
-const client = new Discord.Client(); // creates a discord client
+const bot = new Discord.Client();
 token = process.env.TOKEN;
 const prefix = "/";
 
+bot.commands = new Discord.Collection();
+bot.aliases = new Discord.Collection();
 
-function reply(message) { 
-  if (message == "hello"){
-    message.channel.send("Tumi leu neki"); 
+let commands = ["ping", "hello", "kela", "baal", "oi xet", "bhat khabi neki", "kwanzo gay neki", "oi kwanzou", "test"]
+
+
+fs.readdir("./commands/", (err, files) => { 
+  if (err) console.log(err);
+
+  let jsfile = files.filter(f => f.split(".").pop)
+  console.log(jsfile)
+  if (jsfile.length <= 0){
+    console.log("No commands!");
+    return;
   }
-  
+
+  jsfile.forEach((f) => {
+    let props = require(`./commands/${f}`);
+    console.log(`${f} loaded!`);
+    bot.commands.set(props.help.name, props);
+
+    props.help.aliases.forEach(alias => {
+      bot.aliases.set(alias, props.help.name)
+    })
+  })
 }
+)
 
 
-let mapMsgs = new Map();
-mapMsgs.set("hello", reply);
+bot.on("ready", async () => {
+  console.log(`${bot.user.username} is online`)
+  bot.user.setActivity(`with 1 server`)
+})
 
 
-client.on("message", function(message) {
 
-  let commands = ["ping", "hello", "kela", "baal", "oi xet", "bhat khabi neki", "kwanzo gay neki", "oi kwanzou", "test"]
+bot.on("message", async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
   
-  const commandBody = message.content.slice(prefix.length);
-  const command = commandBody.toLowerCase();
-  console.log(command)
+  let args = message.content.slice(prefix.length).trim().split(/ +/g);
+  let cmd 
+  cmd = args.shift().toLowerCase();
+  let command;
+  let commandFile = bot.commands.get(cmd.slice(prefix.length));
+  console.log(args)
+  if (commandFile) commandFile.run(bot, message, args);
 
-    if (commands.includes(command)){
-        mapMsgs.get(command)(message)
-    }
-    else {
-        message.reply("Not a valid command")
-    }
 
-  if (command === "ping") {
-    const timeTaken = Date.now() - message.createdTimestamp;
-    message.reply(`Pong! This message adsad a latency of ${timeTaken}ms.`);
+  //RUN command
+
+  if (bot.commands.has(cmd)) {
+    console.log(cmd)
+    command = bot.commands.get(cmd);
+    console.log(command)
+  }else if (bot.aliases.has(cmd)){
+    command = bot.commands.get(bot.aliases.get(cmd))
+  }
+  try{
+    command.run(bot, message, args);
+  }catch (e){
+    return;
   }
 
 });
 
 
-client.login(token); // starts the bot up
+bot.login(token); // starts the bot up
