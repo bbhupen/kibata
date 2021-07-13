@@ -47,11 +47,12 @@ bot.on("message", async message => {
   if (!message.content.startsWith(prefix)) return;
 
   
-  let args = message.content.slice(prefix.length);
+  let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let cmd 
-  cmd = args.toLowerCase();
+  cmd = args.shift().toLowerCase();
   let command;
   let commandFile = bot.commands.get(cmd.slice(prefix.length));
+  console.log(args)
   if (commandFile) commandFile.run(bot, message, args);
 
 
