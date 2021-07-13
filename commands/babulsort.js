@@ -1,11 +1,20 @@
+//Bot run function
 module.exports.run = async (bot, message, args) => {
 
-    
-    if(!args[0]) return message.reply("oi geda, array to eneka mar , for eg: `/babulSort 1,2,3,4,5 or /bs 1,2,3,4,5,6`");
+    console.log(typeof args[0])
+    if(!args[0]) return message.reply("oi geda, array to eneka mar , for eg: `?babulSort 1,2,3,4,5 or ?bs 1,2,3,4,5,6`");
 
+    1
+    const alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
+    //Checking if user has entered a string or int
+    if (alphabet.includes(args[0][3])) return message.reply("oi geda, number maar ki word mari asa, for eg: `?babulSort 1,2,3,4,5 or ?bs 1,2,3,4,5,6`"); //Hardcoded -- Please change it 
+    
     //taking input and converting to array
+
     var arr = new Array();
     arr = args[0].split(",")
+
 
     for (a in arr ) {
         arr[a] = parseInt(arr[a], 10); 
@@ -32,6 +41,7 @@ module.exports.run = async (bot, message, args) => {
 
 }
 
+//Bot command
 module.exports.help = {
     name : "babulsort",
     aliases: ["bs"]

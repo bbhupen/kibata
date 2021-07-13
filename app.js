@@ -4,13 +4,16 @@ const fs = require("fs");
 
 const bot = new Discord.Client();
 token = process.env.TOKEN;
-const prefix = "/";
+const prefix = "?";
 
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 
-let commands = ["ping", "hello", "kela", "baal", "oi xet", "bhat khabi neki", "kwanzo gay neki", "oi kwanzou", "test"]
+let commando = ["bs", "babulsort", "hello", "kla",  "ping"] //List of commands
 
+
+
+//Reading Files from commands dir
 
 fs.readdir("./commands/", (err, files) => { 
   if (err) console.log(err);
@@ -34,44 +37,59 @@ fs.readdir("./commands/", (err, files) => {
 }
 )
 
+//Bot activity viewer CLI
 
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online`)
-  bot.user.setActivity(`with 1 server`)
+  bot.user.setActivity(` to ${prefix}commands`, {
+    type: "LISTENING"
+  });
 })
 
 
+//Working of Bot
 
 bot.on("message", async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
   
-  let args = message.content.slice(prefix.length).trim().split(/ +/g);
+  let args = message.content.slice(prefix.length).trim().split(" ");
   let cmd 
   cmd = args.shift().toLowerCase();
   let command;
   let commandFile = bot.commands.get(cmd.slice(prefix.length));
-  console.log(args)
+  // console.log(args)
   if (commandFile) commandFile.run(bot, message, args);
 
+  console.log(cmd.includes(commando))
+  console.log(message.content)
+  console.log(cmd)
+//RUN command
 
-  //RUN command
+  if (commando.includes(cmd)){
+    if (bot.commands.has(cmd)) {
+      console.log(cmd.includes(commando))
+      console.log(cmd)
+      command = bot.commands.get(cmd);
+      console.log(command)
+    }else if (bot.aliases.has(cmd)){
+      command = bot.commands.get(bot.aliases.get(cmd))
+    }
+    try{
+      command.run(bot, message, args);
+    }catch (e){
+      return;
+    }
+  }
+  else {
+    message.reply("Not a Valid Command")
+  }
 
-  if (bot.commands.has(cmd)) {
-    console.log(cmd)
-    command = bot.commands.get(cmd);
-    console.log(command)
-  }else if (bot.aliases.has(cmd)){
-    command = bot.commands.get(bot.aliases.get(cmd))
-  }
-  try{
-    command.run(bot, message, args);
-  }catch (e){
-    return;
-  }
+  
 
 });
 
+//Starts the bot up
 
-bot.login(token); // starts the bot up
+bot.login(token); 
