@@ -35,24 +35,6 @@ fs.readdir("./commands/", (err, files) => {
 )
 
 
-// function reply(message, query) { 
-//   console.log("--" + message)
-//   if (query == "hello"){
-//     message.channel.send("Tumi leu neki"); 
-//   }
-//   if (query == "oi xet"){
-//     message.channel.send("Ki hol leu"); 
-//   }
-//   if (query == "bhat khabi neki"){
-//     message.channel.send("aru belek kam nai neki leu")
-//   }
-  
-// }
-
-
-// let mapMsgs = new Map();
-// mapMsgs.set("hello", reply);
-
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online`)
   bot.user.setActivity(`with 1 server`)
