@@ -57,10 +57,6 @@ bot.on("message", async message => {
   let args = message.content.slice(prefix.length).trim().split(" ");
   let cmd 
   cmd = args.shift().toLowerCase();
-  let command;
-  let commandFile = bot.commands.get(cmd.slice(prefix.length));
-  // console.log(args)
-  if (commandFile) commandFile.run(bot, message, args);
 
   console.log(cmd.includes(commando))
   console.log(message.content)
