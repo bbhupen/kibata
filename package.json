@@ -10,6 +10,7 @@
     "fs": "0.0.1-security"
   },
   "devDependencies": {
+    "node-pandas": "^1.0.5",
     "nodemon": "^2.0.12"
   },
   "scripts": {

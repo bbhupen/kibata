@@ -10,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
   };
 
     const response = await axios.request(options)
-    const insult = await response.data.insult
+    const insult = await response.data.insultS
     const m = await message.channel.send(insult)
     // m.edit(`Pong! ${m.createdTimestamp - message.createdTimestamp}ms`);
 }

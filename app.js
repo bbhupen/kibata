@@ -9,7 +9,7 @@ const prefix = "?";
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 
-let commando = ["nlp", "insult" , "i", "bs", "babulsort", "hello", "kla",  "ping"] //List of commands
+let commando = ["margesort", "ms", "nlp", "help", "h", "insult" , "i", "bs", "babulsort", "hello", "kla",  "ping"] //List of commands
 
 
 
