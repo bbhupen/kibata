@@ -9,7 +9,7 @@ const prefix = "?";
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 
-let commando = ["bs", "babulsort", "hello", "kla",  "ping"] //List of commands
+let commando = ["nlp", "insult" , "i", "bs", "babulsort", "hello", "kla",  "ping"] //List of commands
 
 
 
@@ -50,6 +50,12 @@ bot.on("ready", async () => {
 //Working of Bot
 
 bot.on("message", async message => {
+
+//   message.attachments.forEach((Attachment , key) => {
+//     console.log(`Attachment sent by ${message.author.tag} >> Url: ${Attachment.url}`)
+//     console.log(key)
+// })
+
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 

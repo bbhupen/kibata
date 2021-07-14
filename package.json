@@ -4,6 +4,7 @@
   "description": "Kibata is a discord bot which we are not sure what it does , but soon we will .",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "fs": "0.0.1-security"
