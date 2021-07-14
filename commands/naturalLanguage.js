@@ -9,6 +9,10 @@ module.exports.run = async (bot, message, args) => {
     var body = {
         text : spoken
     }
+    var mean = {
+        method: 'GET',
+        url: 'https://evilinsult.com/generate_insult.php?lang=en&type=json',
+      };
     
     var options = {
         method: 'post',
@@ -18,15 +22,17 @@ module.exports.run = async (bot, message, args) => {
 
 
     
-
+    const meanRes = await axios.request(mean)
     const response = await axios.request(options)
     const result = await response.data.result
 
     if(result.type === "negative"){
         await message.channel.send(`Polarity : ${result.polarity}, Type : ${result.type}`)
         await message.channel.send(`Hey @${message.author.username} I know these are hard times`)
-        await message.channel.send(`And maybe i am not qualified enough to say something cause i am just a bot`)
-        await message.channel.send(`But i just want you to Hold on beacause Sad things happen. They do. But we don’t need to live sad forever.:)`)
+        // await message.channel.send(`And maybe i am not qualified enough to say something cause i am just a bot`)
+        // await message.channel.send(`But i just want you to Hold on beacause Sad things happen. They do. But we don’t need to live sad forever.:)`)
+        const insult = await meanRes.data.insult
+        const m = await message.channel.send(`But You should take this suggestion, ${insult}`)
     }
     else{
         await message.channel.send(`Polarity : ${result.polarity}, Type : ${result.type}`)
